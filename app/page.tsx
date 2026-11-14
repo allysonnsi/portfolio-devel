@@ -1,6 +1,7 @@
 import Image from 'next/image';
-import { ArrowRight, Github, Linkedin, Mail, MapPin, Send } from 'lucide-react';
-import { ThemeToggle } from '@/components/theme-toggle';
+import PortfolioHero from '@/components/ui/portfolio-hero';
+import { GlowCard } from '@/components/ui/spotlight-card';
+import { ArrowRight, Github, Linkedin, MapPin, Code2, Database, Workflow } from 'lucide-react';
 import { Reveal } from '@/components/reveal';
 
 const skills = {
@@ -26,37 +27,17 @@ function Badge({ children }: { children: string }) {
 export default function Home() {
   return (
     <main className="min-h-screen overflow-hidden">
-      <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-slate-50/85 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80">
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4" aria-label="Navegação principal">
-          <a href="#home" className="focus-ring rounded text-lg font-bold tracking-tight">Allyson<span className="text-accent-500">.</span></a>
-          <div className="hidden items-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-300 md:flex">
-            {['Sobre', 'Habilidades', 'Projetos', 'Formação', 'Contato'].map((item) => (
-              <a key={item} href={`#${item.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')}`} className="focus-ring rounded transition hover:text-accent-600">{item}</a>
-            ))}
-          </div>
-          <ThemeToggle />
-        </nav>
-      </header>
-
-      <section id="home" className="section-shell grid min-h-[84vh] items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-        <Reveal>
-          <p className="mb-4 inline-flex rounded-full border border-accent-500/30 bg-accent-500/10 px-4 py-2 text-sm font-semibold text-accent-600 dark:text-accent-400">Desenvolvedor Backend | Estudante IFMA</p>
-          <h1 className="text-4xl font-black tracking-tight sm:text-6xl">Desenvolvedor backend junior, buscando a primeira experiência na área.</h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-300">Estudante de Sistemas de Informação no Instituto Federal do Maranhão, com foco em desenvolvimento backend, sistemas de gestão que resolvem problemas reais.</p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a href="#projetos" className="focus-ring inline-flex items-center justify-center gap-2 rounded-full bg-accent-600 px-6 py-3 font-semibold text-white shadow-glow transition hover:-translate-y-1 hover:bg-accent-500">Ver projetos <ArrowRight size={18} /></a>
-            <a href="#contato" className="focus-ring inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-3 font-semibold transition hover:-translate-y-1 hover:border-accent-500 dark:border-slate-700">Entrar em contato</a>
-          </div>
-        </Reveal>
-        <Reveal delay={0.12}>
-          <div className="card relative p-4">
-            <Image src="/foto04.jpeg" alt="Notebook com código representando desenvolvimento de software" width={900} height={700} priority className="rounded-2xl object-cover" />
-          </div>
-        </Reveal>
-      </section>
+      <PortfolioHero />
 
       <section id="sobre" className="section-shell">
         <Reveal><h2 className="text-3xl font-bold sm:text-4xl">Sobre mim</h2><p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600 dark:text-slate-300">Sou Allyson, estudante de Sistemas de Informação no IFMA. Minha trajetória acadêmica e prática é orientada por desenvolvimento backend, com foco na linguagem Java, APIs, bancos de dados e sistemas de gestão com autenticação, regras de negócio e automações que melhoram a rotina de pessoas e instituições.</p></Reveal>
+      </section>
+
+      <section id="servicos" className="section-shell">
+        <Reveal><p className="mb-3 text-sm font-bold uppercase tracking-[.2em] text-accent-600 dark:text-accent-400">Como posso contribuir</p><h2 className="text-3xl font-bold sm:text-4xl">Desenvolvimento com propósito</h2></Reveal>
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
+          {[{icon:Code2,title:'Backend e APIs',text:'Aplicações e APIs REST com regras de negócio claras e código organizado.'},{icon:Database,title:'Dados e persistência',text:'Modelagem e integração com bancos relacionais como PostgreSQL e MySQL.'},{icon:Workflow,title:'Automação',text:'Soluções para simplificar processos e reduzir tarefas repetitivas.'}].map(({icon:Icon,title,text})=><GlowCard key={title} customSize glowColor="green" className="h-full"><article><Icon className="mb-5 text-accent-600 dark:text-accent-400"/><h3 className="text-xl font-bold">{title}</h3><p className="mt-3 leading-7 text-slate-600 dark:text-slate-400">{text}</p></article></GlowCard>)}
+        </div>
       </section>
 
       <section id="habilidades" className="section-shell">
@@ -68,18 +49,45 @@ export default function Home() {
 
       <section id="projetos" className="section-shell">
         <Reveal><h2 className="text-3xl font-bold sm:text-4xl">Projetos em destaque</h2></Reveal>
-        <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          {projects.map((project, index) => <Reveal key={project.title} delay={index * 0.08}><article className="card flex h-full flex-col p-6 hover:-translate-y-1 hover:border-accent-500/70"><h3 className="text-2xl font-bold">{project.title}</h3><p className="mt-4 leading-7 text-slate-600 dark:text-slate-300"><strong>Problema resolvido:</strong> {project.problem}</p><div className="mt-5 flex flex-wrap gap-2">{project.stack.map((tech) => <Badge key={tech}>{tech}</Badge>)}</div><ul className="mt-5 space-y-2 text-slate-700 dark:text-slate-200">{project.features.map((feature) => <li key={feature}>• {feature}</li>)}</ul><div className="mt-auto pt-6"><a href="#" className="focus-ring inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-2 font-semibold transition hover:border-accent-500 hover:text-accent-600 dark:border-slate-700">Repositório/demo <ArrowRight size={16} /></a></div></article></Reveal>)}
+        <div className="mt-8 grid gap-6">
+          {projects.map((project, index) => (
+            <Reveal key={project.title} delay={index * 0.08}>
+              <GlowCard customSize glowColor="green" className="p-3 sm:p-4">
+                <article className="grid items-stretch gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+                  <div className="relative min-h-48 overflow-hidden rounded-xl">
+                    <Image src="/desenvolvimento.jpg" alt="Notebook aberto em um editor de código" fill sizes="(min-width: 1024px) 460px, 90vw" className="object-cover" />
+                  </div>
+                  <div className="p-3 sm:p-5">
+                    <h3 className="text-2xl font-bold">{project.title}</h3>
+                    <p className="mt-4 max-w-prose leading-7 text-slate-600 dark:text-slate-300">{project.problem}</p>
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {project.stack.map((tech) => <Badge key={tech}>{tech}</Badge>)}
+                    </div>
+                    <ul className="mt-5 list-disc space-y-2 pl-5 text-slate-600 dark:text-slate-300">
+                      {project.features.map((feature) => <li key={feature}>{feature}</li>)}
+                    </ul>
+                    <a href="https://github.com/allysonnsi" target="_blank" rel="noreferrer" className="focus-ring mt-6 inline-flex items-center gap-2 rounded-full border border-slate-500 px-4 py-2 font-semibold hover:text-accent-600 dark:hover:text-accent-400">
+                      GitHub de Allyson <ArrowRight size={16} aria-hidden="true" />
+                    </a>
+                  </div>
+                </article>
+              </GlowCard>
+            </Reveal>
+          ))}
         </div>
       </section>
 
       <section id="formacao" className="section-shell"><Reveal><div className="card p-8"><h2 className="text-3xl font-bold sm:text-4xl">Formação</h2><p className="mt-4 text-lg text-slate-600 dark:text-slate-300">Sistemas de Informação — Instituto Federal do Maranhão (IFMA).</p><p className="mt-4 text-lg text-slate-600 dark:text-slate-300">Técnico em Informática — Instituto Estadual do Maranhão (IEMA).</p></div></Reveal></section>
 
+      <section id="depoimentos" className="section-shell"><Reveal><div className="card border-accent-400/20 bg-gradient-to-br from-accent-400/10 to-transparent p-8"><p className="text-sm font-bold uppercase tracking-[.2em] text-accent-600 dark:text-accent-400">Em evolução</p><h2 className="mt-3 text-3xl font-bold">Cada projeto é uma oportunidade de aprender e entregar melhor.</h2><p className="mt-4 max-w-2xl leading-7 text-slate-600 dark:text-slate-400">Estou construindo minha trajetória profissional por meio de projetos práticos, colaboração e aprendizado contínuo.</p></div></Reveal></section>
+
+      <section id="blog" className="section-shell"><Reveal><h2 className="text-3xl font-bold">Aprendizado em prática</h2><p className="mt-3 text-slate-600 dark:text-slate-400">Acompanhe meus projetos e estudos no <a className="text-accent-600 dark:text-accent-400 underline underline-offset-4" href="https://github.com/allysonnsi" target="_blank" rel="noreferrer">GitHub</a>.</p></Reveal></section>
+
       <section id="contato" className="section-shell">
         <Reveal><h2 className="text-3xl font-bold sm:text-4xl">Contato</h2></Reveal>
         <div className="mt-8 grid gap-8 lg:grid-cols-2">
-          <Reveal><form action="mailto:allyson@example.com" className="card space-y-4 p-6"><input aria-label="Nome" placeholder="Seu nome" className="focus-ring w-full rounded-2xl border border-slate-300 bg-transparent px-4 py-3 dark:border-slate-700" /><input aria-label="E-mail" type="email" placeholder="seuemail@exemplo.com" className="focus-ring w-full rounded-2xl border border-slate-300 bg-transparent px-4 py-3 dark:border-slate-700" /><textarea aria-label="Mensagem" placeholder="Como posso ajudar?" rows={5} className="focus-ring w-full rounded-2xl border border-slate-300 bg-transparent px-4 py-3 dark:border-slate-700" /><button className="focus-ring inline-flex items-center gap-2 rounded-full bg-accent-600 px-6 py-3 font-semibold text-white transition hover:bg-accent-500"><Send size={18} /> Enviar mensagem</button></form></Reveal>
-          <Reveal delay={0.08}><div className="card space-y-4 p-6"><a className="focus-ring flex items-center gap-3 rounded-xl p-2 hover:text-accent-600" href="mailto:allyson@example.com"><Mail /> allyson@example.com</a><a className="focus-ring flex items-center gap-3 rounded-xl p-2 hover:text-accent-600" href="github.com/allysonnsi"><Github /> GitHub</a><a className="focus-ring flex items-center gap-3 rounded-xl p-2 hover:text-accent-600" href="linkedin.com/in/santosallysonn"><Linkedin /> LinkedIn</a><p className="flex items-center gap-3 p-2 text-slate-600 dark:text-slate-300"><MapPin /> Maranhão, Brasil</p></div></Reveal>
+          <Reveal><div className="card flex flex-col items-start gap-5 p-8"><p className="text-lg leading-8 text-slate-600 dark:text-slate-300">Tem uma ideia ou oportunidade? Vamos conversar sobre como posso contribuir.</p><a href="https://github.com/allysonnsi" target="_blank" rel="noreferrer" className="focus-ring inline-flex items-center gap-2 rounded-full bg-accent-500 px-6 py-3 font-semibold text-slate-950 transition hover:bg-accent-400"><Github size={18}/> Conheça meu GitHub</a></div></Reveal>
+          <Reveal delay={0.08}><div className="card space-y-4 p-6"><a className="focus-ring flex items-center gap-3 rounded-xl p-2 hover:text-accent-600 dark:text-accent-400" href="https://github.com/allysonnsi" target="_blank" rel="noreferrer"><Github /> github.com/allysonnsi</a><a className="focus-ring flex items-center gap-3 rounded-xl p-2 hover:text-accent-600 dark:text-accent-400" href="https://linkedin.com/in/santosallysonn" target="_blank" rel="noreferrer"><Linkedin /> LinkedIn</a><p className="flex items-center gap-3 p-2 text-slate-600 dark:text-slate-400"><MapPin /> Maranhão, Brasil</p></div></Reveal>
         </div>
       </section>
 
@@ -87,3 +95,5 @@ export default function Home() {
     </main>
   );
 }
+
+

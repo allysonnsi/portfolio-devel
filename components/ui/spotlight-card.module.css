@@ -1,0 +1,37 @@
+.card {
+  --x: -400px;
+  --y: -400px;
+  --hue: calc(var(--base) + var(--xp, 0) * var(--spread));
+  position: relative;
+  isolation: isolate;
+  border: 1px solid var(--card-border);
+  background: radial-gradient(200px circle at var(--x) var(--y), hsl(var(--hue) 100% 70% / 0.1), transparent), var(--card-background);
+}
+
+.card::before,
+.card::after,
+.halo::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  padding: 2px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(150px circle at var(--x) var(--y), hsl(var(--hue) 100% 60%), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+.card::after {
+  background: radial-gradient(80px circle at var(--x) var(--y), hsl(0 0% 100% / 0.85), transparent);
+}
+
+.halo { position: absolute; inset: 0; border-radius: inherit; filter: blur(14px); opacity: 0.5; pointer-events: none; z-index: -1; }
+.content { position: relative; height: 100%; }
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .card { background: var(--card-background); }
+  .card::before, .card::after, .halo { display: none; }
+}

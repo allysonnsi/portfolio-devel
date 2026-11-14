@@ -6,18 +6,18 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-inter)', 'Inter', 'sans-serif']
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif']
       },
       colors: {
         accent: {
-          50: '#eff6ff',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb'
+          50: '#f7fbe7',
+          400: '#c3e41d',
+          500: '#acc91a',
+          600: '#526400'
         }
       },
       boxShadow: {
-        glow: '0 0 35px rgba(59, 130, 246, 0.25)'
+        glow: '0 0 35px rgba(195, 228, 29, 0.2)'
       }
     }
   },
@@ -25,3 +25,4 @@ const config: Config = {
 };
 
 export default config;
+
